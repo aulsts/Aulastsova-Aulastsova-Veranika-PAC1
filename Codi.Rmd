@@ -5,9 +5,28 @@ date: "2025-04-01"
 output: html_document
 ---
 
+Aquest fitxer conté el codi complet de l'anàlisi.
+
+
 Es van descaregar les dades del repositori https://github.com/nutrimetabolomics/metaboData. Exactament el dataset 2024-Cachexia, i s'han introduit els dos fitxers ("human_cachexia.csv" i "description.md") en el directori del projecte actual.
 
 ```{r}
-setwd("D:/uoc/ADO/PAC1_VAA")
+setwd("D:/uoc/ADO/PAC1_VAA") # El directori de treball
 ```
+
+
+Lectura del document amb les dades i visualització d'una part:
+
+```{r}
+library(readr)
+cachexia <- read_csv("human_cachexia.csv") 
+head(cachexia)
+```
+
+Creació de l'objecte SummarizedExperiment:
+
+```{r}
+
+```
+
 
