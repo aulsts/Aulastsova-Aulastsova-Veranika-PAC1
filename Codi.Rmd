@@ -149,6 +149,106 @@ boxplot(log_control,
         cex.axis = 0.7)
 ```
 
+Anàlisi amb POMA:
+
+```{r}
+library(POMA)
+library(ggtext)
+library(magrittr)
+
+# Preparació de les dades pel package POMA
+colData(se_cachexia)$Group <- as.factor(colData(se_cachexia)$Group)
+
+# Normalització de les dades
+norm_cachexia <- PomaNorm(se_cachexia, method = "log_pareto")
+
+# Boxplots
+PomaBoxplots(se_cachexia, x = "features") # Abans de la normalització
+PomaBoxplots(norm_cachexia, x = "features") # Després de la normalització
+```
+
+```{r, fig.width=16, fig.height=10}
+# Gràfics de la densitat
+
+PomaDensity(se_cachexia, x = "features") # Abans de la normalització
+PomaDensity(norm_cachexia, x = "features") # Després de la normalització
+
+```
+
+
+```{r}
+# Outlier detection
+PomaOutliers(norm_cachexia)$polygon_plot
+pre_processed <- PomaOutliers(norm_cachexia)$data
+```
+
+```{r}
+# T-test
+ttest_results <- PomaUnivariate(norm_cachexia, method = "ttest")
+print(ttest_results)
+```
+
+
+```{r}
+# Test Mann
+mann_results <- PomaUnivariate(norm_cachexia, method = "mann")
+print(mann_results)
+```
+
+
+PCA: Pricnipal Component Analysis
+
+```{r}
+library(ggplot2)
+# PCA
+poma_pca <- PomaPCA(data = pre_processed,  
+  outcome = NULL,        
+  center = TRUE,         
+  scale = TRUE,          
+  ncomp = 4,             
+  labels = TRUE,         
+  ellipse = TRUE,        
+  load_length = 1        
+)
+
+# Gràfics PCA
+poma_pca$factors_plot + ggplot2::ggtitle("Factors Plot") 
+poma_pca$loadings_plot + ggplot2::ggtitle("Loadings Plot")
+```
+
+PLS-DA: Partial Least-Squares Discriminant Analysis
+
+```{r}
+poma_plsda <- PomaPLS(
+  data = pre_processed,   
+  method = "plsda",       
+  y = NULL,               
+  ncomp = 5,              
+  labels = TRUE,          
+  ellipse = TRUE,         
+  cross_validation = TRUE,
+  validation = "Mfold",   
+  folds = 5,              
+  nrepeat = 10,           
+  vip = 1,                
+  num_features = 10       
+)
+
+# El gràfic PLS-DA factors 
+poma_plsda$factors_plot + ggplot2::ggtitle("PLS-DA Factors Plot (POMA)")
+
+# El VIP gràfic: metabòlits més importants
+poma_plsda$vip_plot + ggplot2::ggtitle("PLS-DA Variable Importance Plot (POMA)")
+```
+
+Correlació:
+
+```{r, fig.width=18, fig.height=12}
+poma_cor <- PomaCorr(pre_processed)
+poma_cor$correlations
+poma_cor$corrplot
+```
+
 
 
 

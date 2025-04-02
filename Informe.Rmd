@@ -44,7 +44,6 @@ Els objectius de la següent anàlisi han sigut:
 - Analitzar les dades del dataset amb l'intenció d'observar possibles relacions entre les variables amb els grups de pacients que presenten cachexia, i els pacients de grup control.
 
 
-
 **3. Mètodes** 
 
 Aquest treball s’ha basat en l’anàlisi del dataset “2024-Cachexia” del repositori github [1]. 
@@ -79,33 +78,38 @@ print(se_cachexia)
 
 A continuació s'ha realitzat l'anàlisi de l'objecte.
 El dataset conté 47 pacients que presenten cachexia, i 30 pacients control. En primer lloc, s'ha realitzat un anàlisi estadístic bàsic de les mitjanes, medianes, els quartils, etc., i una representació visual mitjançant Boxplots.
-Després
+Per la resta d'anàlisi s'ha fet servir el package POMA [5]. S´han realitzat diferents anàlisis univariants i multivariants.
+
 
 **4.	Resultats** 
 
 Les dades analitzades s'han separat segons el grup: control i cachexic. Els Boxplot del resum de les dades "raw" han resultat molt asimètrics, per això s'ha realitzat també transformació logarítmica i nous Boxplots.
 
-```{r}
-knitr::include_graphics("grup_cachexia.png")
-```
-
-
-```{r}
-knitr::include_graphics("grup_control.png")
-```
-
 S'observa com en el cas del grup Cachexia, els valors més alts corresponen a la Creatinina, seguits pel Citrat i Hippurate, fet que coincideix amb el grup Control. Els valors més baixos també concideixen en els dos grups, sent els valors del Fumarat.
 
 
+S'han realitzat Boxplots i gràfics de la densitat de les dades (amb el package POMA) abans de la normalització de les dades i després. 
 
-**5.	Discussió** És important que reflexioneu sobre les limitacions de l' estudi i sobre el treball que heu realitzat, en el context del problema biològic d' interès que aborda la PEC. (1 pàgina)
+S'ha observat mitjançant els Boxplot del package POMA i dades normalitzades, que tots els metabòlits presenten valors més alts en el grup amb cachexia, que en el control. En el gràfic de la densitat, observem que la majoria dels metabòlits presenta només un pic, presentant una distribució unimodal, i són bastant centrats.
+Amb el gràfic d'Outliers s'observa com cap mostra es troba fora del seu grup concret, i hi ha forta superposició entre el grup control i cachexia, fet que significa poca variabilitat/poques diferències entre els dos.
+
+Els anàlisis univariants de T-Student Test i el Mann Test s'han ealitzat per trobar possibles diferències significatives entre els gups. Segons els valors del p-ajustat, la majoria (54) metabòlits presenten valors significatius (p<0'05), i per tant, són importants per l'estudi.
+
+Gràcies a l'anàlisi dels components principals (PCA), en el gràfic dels loadings, s¡observen els 10 metabòlits claus per diferenciar entre els grups cachexia i control: creatinine, valine, alanine, treonine, asparagine, glutamine, cis.aconitate, pyroglutamate, ethanolamine i dimethylamine.
+
+Després del PCA, s'ha realitzat també PLS-DA (Partial Least-Squares Discriminant Analysis), segons el qual els metabòlits més importànts per la diferenciació entre els grups cachexia i control són: dimethylglicine, quinolinate, leucine, valine, glutamine, gluose, betaine, ...
+
+Finalment, s'han fet càlculs de correlació i el seu gràfic. Les correlacions entre tots els metabòlits són positius, amb valors entre 0'9 i 0'5, suggerint existència de patrons comuns o pot ser paper comú en el síndrome.
+
+
+**5.	Discussió** És important que reflexioneu sobre les limitacions de l' estudi i sobre el treball que heu realitzat, en el context del problema biològic d'interès que aborda la PEC. (1 pàgina)
 
 
 
 
 **6.	Conclusions** Concises, clares i extretes de la vostra anàlisi. (1/2 pàgina)
 
-
+S'ha observat
 
 
 
@@ -117,7 +121,21 @@ S'observa com en el cas del grup Cachexia, els valors més alts corresponen a la
 [2] https://www.mdpi.com/2073-4409/13/3/252
 [3] https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf 
 [4] https://combine-australia.github.io/2017-05-19-bioconductor-melbourne/data_structures.html
+[5] https://www.bioconductor.org/packages/release/bioc/vignettes/POMA/inst/doc/POMA-workflow.html
+
+POMA manual: https://bioconductor.org/packages/devel/bioc/manuals/POMA/man/POMA.pdf 
 
 
 Repositori del treball: https://github.com/aulsts/Aulastsova-Aulastsova-Veranika-PAC1.git 
+
+
+**Annex:**
+
+Els gràfics:
+
+
+
+
+
+
 
