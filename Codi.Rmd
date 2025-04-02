@@ -2,7 +2,9 @@
 title: "Codi"
 author: "Veranika Aulastsova"
 date: "2025-04-01"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 Aquest fitxer conté el codi complet de l'anàlisi.
@@ -151,7 +153,7 @@ boxplot(log_control,
 
 Anàlisi amb POMA:
 
-```{r}
+```{r, fig.width=16, fig.height=10}
 library(POMA)
 library(ggtext)
 library(magrittr)
@@ -214,6 +216,7 @@ poma_pca <- PomaPCA(data = pre_processed,
 # Gràfics PCA
 poma_pca$factors_plot + ggplot2::ggtitle("Factors Plot") 
 poma_pca$loadings_plot + ggplot2::ggtitle("Loadings Plot")
+ggsave("psa_load.png")
 ```
 
 PLS-DA: Partial Least-Squares Discriminant Analysis
@@ -238,7 +241,9 @@ poma_plsda <- PomaPLS(
 poma_plsda$factors_plot + ggplot2::ggtitle("PLS-DA Factors Plot (POMA)")
 
 # El VIP gràfic: metabòlits més importants
-poma_plsda$vip_plot + ggplot2::ggtitle("PLS-DA Variable Importance Plot (POMA)")
+poma_plsda$vip_plot + ggplot2::ggtitle("PLS-DA Variable Importance Plot (POMA)") + 
+  theme(axis.text.y = element_text(size = 6))
+ggsave("vip.png")
 ```
 
 Correlació:
@@ -247,14 +252,23 @@ Correlació:
 poma_cor <- PomaCorr(pre_processed)
 poma_cor$correlations
 poma_cor$corrplot
+
 ```
 
+Codi per guardar alguns gràfics:
 
+```{r, fig.width=18, fig.height=12}
+png("correlacio.png", width = 18 * 72, height = 12 * 72, res = 72)
+poma_cor <- PomaCorr(pre_processed)
+poma_cor$corrplot
+dev.off()
+```
 
-
-
-
-
+```{r, fig.width=16, fig.height=10}
+png("boxplot.png", width = 18 * 72, height = 12 * 72, res = 72)
+PomaBoxplots(norm_cachexia, x = "features")
+dev.off()
+```
 
 
 
