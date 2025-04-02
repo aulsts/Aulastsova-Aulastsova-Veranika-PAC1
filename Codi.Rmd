@@ -26,7 +26,136 @@ head(cachexia)
 Creació de l'objecte SummarizedExperiment:
 
 ```{r}
+library(SummarizedExperiment)
 
+# Extracció/Definició de les metadades (ID dels pacients i grups cachexia/control)
+patient_ids <- cachexia[[1]]
+groups <- cachexia[[2]]
+
+# Creació d'un dataframe amb les metadades
+col_metadata <- data.frame(Group = groups) # Es fa servir la columna extreta dels grups per definir a quin pertanyen els pacients
+rownames(col_metadata) <- patient_ids  # ID dels paciets com els noms de les files
+
+# Les dades: els metabòlits
+data_matrix <- as.matrix(cachexia[, -c(1, 2)])  # Es crea una matriu amb només els metabòlits
+rownames(data_matrix) <- patient_ids  # Es crea relació entre els IDs com noms de files i els valors dels metabòlits
+
+# Unió de la informació en un SummarizedExperiment object
+se_cachexia <- SummarizedExperiment(
+  assays = list(counts = t(data_matrix)),
+  colData = DataFrame(col_metadata),
+  rowData = DataFrame(features = colnames(data_matrix))
+)
+
+print(se_cachexia)
+
+save(se_cachexia, file = "se_cachexia.Rda") # Guardar l'objecte en un fitxer
 ```
+
+Anàlisi:
+
+```{r}
+dim(se_cachexia) # Dimensions de l'objecte
+names(se_cachexia) # Noms de les columnes: llistat dels metabòlits
+
+dim(colData(se_cachexia)) # Dimensions de la part colData de l'objecte
+names(colData(se_cachexia)) # Noms de les columnes dins de colData
+colData(se_cachexia)$Group # Noms dels valors dins de la columna Group
+table(colData(se_cachexia)$Group) # Recompte d'aquests valors
+```
+
+Resum estadistic bàsic sense divisió segons el grup
+
+```{r}
+t(round(apply(data_matrix,2, summary))) # Resum estadístic bàsic (mitjanes, medianes, etc.) dels valors segons cada metabòlit, sense divisió per grups en format de taula
+```
+
+Resum estadístic segons cada grup
+
+```{r}
+# Separació de les dades segons el grup
+cachexic_patients <- patient_ids[groups == "cachexic"]
+control_patients <- patient_ids[groups == "control"]
+
+# Unió dels grups amb els seus valors dels metabòlits
+cachexia_data <- data_matrix[rownames(data_matrix) %in% cachexic_patients, , drop = FALSE]
+control_data <- data_matrix[rownames(data_matrix) %in% control_patients, , drop = FALSE]
+
+# Càlcul dels resums per cada grup
+cachexia_summary <- apply(cachexia_data, 2, function(x) round(summary(x), 2))
+control_summary <- apply(control_data, 2, function(x) round(summary(x), 2))
+
+# Els resultats en format de taula
+print(t(cachexia_summary)) 
+print(t(control_summary))
+```
+
+```{r}
+# Gràfic Boxplot pel grup Cachexia
+boxplot(cachexia_data,
+        col = "green2",
+        main = "Grup Cachexia",
+        las = 2,
+        cex.axis = 0.7)
+
+# Gràic Boxplot pel grup Control"
+boxplot(control_data,
+        col = "yellow2",
+        main = "Grup Control",
+        las = 2,
+        cex.axis = 0.7)
+```
+
+Boxplots amb transformació logarítmica
+
+```{r}
+# Transformació logarítmica
+log_cachexia <- log2(cachexia_data + 1)
+log_control <- log2(control_data + 1)
+
+# Gràfic Boxplot pel grup Cachexia
+png("grup_cachexia.png") # Guardar com a png
+boxplot(log_cachexia,
+        col = "green2",
+        main = "Grup Cachexia",
+        las = 2,
+        cex.axis = 0.7)
+dev.off()
+
+# Gràfic Boxplot pel grup Control"
+png("grup_control.png")
+boxplot(log_control,
+        col = "yellow2",
+        main = "Grup Control",
+        las = 2,
+        cex.axis = 0.7)
+dev.off()
+```
+Visualitzar els boxplots anteriors aquí:
+
+```{r}
+# Gràfic Boxplot pel grup Cachexia
+boxplot(log_cachexia,
+        col = "green2",
+        main = "Grup Cachexia",
+        las = 2,
+        cex.axis = 0.7)
+
+# Gràfic Boxplot pel grup Control"
+boxplot(log_control,
+        col = "yellow2",
+        main = "Grup Control",
+        las = 2,
+        cex.axis = 0.7)
+```
+
+
+
+
+
+
+
+
+
 
 

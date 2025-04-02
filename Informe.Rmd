@@ -73,12 +73,28 @@ ExpressionSet és una classe amb finalitats semblants al SummarizedExperiment, a
 Per crear l'objecte "se_cachexia" en primer lloc s'han extret les metadades del fitxer: la columna 1 amb els IDs dels pacients, i la columna 2 dels diferents grups.
 
 ```{r}
+load("se_cachexia.Rda")
 print(se_cachexia)
 ```
 
+A continuació s'ha realitzat l'anàlisi de l'objecte.
+El dataset conté 47 pacients que presenten cachexia, i 30 pacients control. En primer lloc, s'ha realitzat un anàlisi estadístic bàsic de les mitjanes, medianes, els quartils, etc., i una representació visual mitjançant Boxplots.
+Després
+
+**4.	Resultats** 
+
+Les dades analitzades s'han separat segons el grup: control i cachexic. Els Boxplot del resum de les dades "raw" han resultat molt asimètrics, per això s'ha realitzat també transformació logarítmica i nous Boxplots.
+
+```{r}
+knitr::include_graphics("grup_cachexia.png")
+```
 
 
-**4.	Resultats** Els resultats han de respondre a les preguntes plantejades. Sovint aquestes són obertes (ex. "Exploració de les dades") o admeten diferents interpretacions, així que podeu ser flexibles; però expliqueu sempre per què feu el que feu. Davant el dubte, consultau els materials i exemples de referència. (4-5 pàgines)
+```{r}
+knitr::include_graphics("grup_control.png")
+```
+
+S'observa com en el cas del grup Cachexia, els valors més alts corresponen a la Creatinina, seguits pel Citrat i Hippurate, fet que coincideix amb el grup Control. Els valors més baixos també concideixen en els dos grups, sent els valors del Fumarat.
 
 
 
