@@ -13,7 +13,7 @@
 
 <meta name="date" content="2025-04-01" />
 
-<title>Informe</title>
+<title>Informe PAC 1: Anàlisi de Dades Òmiques</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,19 +350,14 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Informe</h1>
+<h1 class="title toc-ignore">Informe PAC 1: Anàlisi de Dades
+Òmiques</h1>
 <h4 class="author">Veranika Aulastsova</h4>
 <h4 class="date">2025-04-01</h4>
 
 </div>
 
 
-<div id="informe-pac-1" class="section level1">
-<h1>Informe PAC 1</h1>
-<div id="anàlisi-de-dades-òmiques" class="section level2">
-<h2>Anàlisi de Dades Òmiques</h2>
-<div id="veranika-aulastsova-aulastsova" class="section level3">
-<h3>Veranika Aulastsova Aulastsova</h3>
 <div id="taula-de-continguts" class="section level4">
 <h4><strong>Taula de continguts:</strong></h4>
 <ol style="list-style-type: decimal">
@@ -377,11 +372,14 @@ display: none;
 </div>
 <div id="abstract" class="section level4">
 <h4><strong>1. Abstract</strong></h4>
-<p>En aquest treball s’ha analitzat un dataset que recull dades sobre
-diferents metabòlits en dos tipus de pacients, de gurp control, i de
-pacients amb caquèxia, un estat de pèrdua de massa muscular, relacionat
-amb moltes enfermetats. Després d’anàlisis univariants i multivariants,
-s’ha conclós que …</p>
+<p>En aquest treball s’ha analitzat un conjunt de dades que recull dades
+sobre diferents metabòlits en dos tipus de pacients, de grup control, i
+de pacients amb caquèxia, un estat de pèrdua de massa muscular,
+relacionat amb moltes malalties. Després d’anàlisis univariants i
+multivariants, s’ha conclòs que hi és present una alteració en els
+metabòlits en cas de caquèxia. S’han marcat alguns metabòlits més
+importants, però és necessari continuar amb l’estudi i aprofundir més en
+el tema analitzant més dades.</p>
 </div>
 <div id="objectius" class="section level4">
 <h4><strong>2. Objectius</strong></h4>
@@ -389,21 +387,21 @@ s’ha conclós que …</p>
 <ul>
 <li><p>Aprendre a utilitzar el package SummarizedExperiment per fer
 anàlisi de dades òmiques.</p></li>
-<li><p>Analitzar les dades del dataset amb l’intenció d’observar
-possibles relacions entre les variables amb els grups de pacients que
+<li><p>Analitzar les dades del dataset amb la intenció d’observar
+possibles relacions entre els metabòlits amb els grups de pacients que
 presenten cachexia, i els pacients de grup control.</p></li>
 </ul>
 </div>
 <div id="mètodes" class="section level4">
 <h4><strong>3. Mètodes</strong></h4>
 <p>Aquest treball s’ha basat en l’anàlisi del dataset “2024-Cachexia”
-del repositori github [1]. Cachexia és un síndrome definit per la pèrdua
-de la massa muscular esquelètica relacionada amb malalties com el càncer
-o el SIDA. Aquest síndrome augmenta les possibilitats del pacient de
-patir complicacions quirúrgiques o en el tractament. Actualment, els
-mecanismes moleculars que ho causen no són molt coneguts, i les opcions
-del tractament són limitades, fet pel qual considero que és un tema
-important d’estudi [2].</p>
+del repositori github [1]. Cachexia és una síndrome definit per la
+pèrdua de la massa muscular esquelètica relacionada amb malalties com el
+càncer o el SIDA. Aquesta síndrome augmenta les possibilitats del
+pacient de patir complicacions quirúrgiques o en el tractament.
+Actualment, els mecanismes moleculars que ho causen no són molt
+coneguts, i les opcions del tractament són limitades, fet pel qual
+considero que és un tema important d’estudi [2].</p>
 <pre class="r"><code>library(readr)
 cachexia &lt;- read_csv(&quot;human_cachexia.csv&quot;) </code></pre>
 <pre><code>## Rows: 77 Columns: 65
@@ -431,7 +429,7 @@ cachexia &lt;- read_csv(&quot;human_cachexia.csv&quot;) </code></pre>
 ## #   Acetone &lt;dbl&gt;, Adipate &lt;dbl&gt;, Alanine &lt;dbl&gt;, Asparagine &lt;dbl&gt;,
 ## #   Betaine &lt;dbl&gt;, Carnitine &lt;dbl&gt;, Citrate &lt;dbl&gt;, Creatine &lt;dbl&gt;,
 ## #   Creatinine &lt;dbl&gt;, Dimethylamine &lt;dbl&gt;, Ethanolamine &lt;dbl&gt;, Formate &lt;dbl&gt;, …</code></pre>
-<p>Tal i com s’observa, el fitxer amb les dades presenta una columna
+<p>Tal com s’observa, el fitxer amb les dades presenta una columna
 identificadora amb els IDs dels pacients, i una “muscle loss” que
 identifica si el pacient presenta cachexia o si és del grup control. La
 resta de les columnes presenta els valors d’estudi, els metabòlits.</p>
@@ -442,7 +440,7 @@ dades, “description.md”, i un fitxer amb les dades,
 “human_cachexia.csv”. El package principal ha sigut
 “SummarizedExperiment”.</p>
 <p>A continuació, s’ha creat un objecte SummarizedExperiment:
-“se_cachexia” (es pot trobat adjuntat en el repositori).</p>
+“se_cachexia” (es pot trobar adjuntat en el repositori).</p>
 <blockquote>
 <p><em>La classe SummarizedExperiment és una extensió d’ExpressionSet,
 utilitzada per moltes aplicacions i bases de dades (com és el cas de
@@ -654,9 +652,6 @@ importants.</p>
 <p>[4] <a href="https://combine-australia.github.io/2017-05-19-bioconductor-melbourne/data_structures.html" class="uri">https://combine-australia.github.io/2017-05-19-bioconductor-melbourne/data_structures.html</a></p>
 <p>[5] <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/POMA/inst/doc/POMA-workflow.html" class="uri">https://www.bioconductor.org/packages/release/bioc/vignettes/POMA/inst/doc/POMA-workflow.html</a></p>
 <p>POMA manual: <a href="https://bioconductor.org/packages/devel/bioc/manuals/POMA/man/POMA.pdf" class="uri">https://bioconductor.org/packages/devel/bioc/manuals/POMA/man/POMA.pdf</a></p>
-</div>
-</div>
-</div>
 </div>
 
 

@@ -1,21 +1,11 @@
 ---
-title: "Informe"
+title: "Informe PAC 1: Anàlisi de Dades Òmiques"
 author: "Veranika Aulastsova"
 date: "2025-04-01"
 output:
   html_document: default
   pdf_document: default
 ---
-
-# Informe PAC 1
-
-
-## Anàlisi de Dades Òmiques
-
-
-### Veranika Aulastsova Aulastsova
-
-
 
 #### **Taula de continguts:**
 
